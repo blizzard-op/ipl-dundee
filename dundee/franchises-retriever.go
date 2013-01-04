@@ -27,8 +27,7 @@ func RetrieveFranchise(request *http.Request) (string, error) {
 		return "", err1
 	}
 
-	err2 := unmarshalJSON(jsonBytes, &streams)
-	if err2 != nil {
+	if err2 := json.Unmarshal(jsonBytes, &streams); err2 != nil {
 		return "", err2
 	}
 
@@ -39,13 +38,6 @@ func RetrieveFranchise(request *http.Request) (string, error) {
 	}
 
 	return "", errors.New("Did not find stream corresponding to given streamid.")
-}
-
-func unmarshalJSON(jsonBytes []byte, streams *[]stream) error {
-	if err := json.Unmarshal(jsonBytes, streams); err != nil {
-		return err
-	}
-	return nil
 }
 
 func verifyPOSTData(r *http.Request) (string, error) {

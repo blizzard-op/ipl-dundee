@@ -32,9 +32,11 @@ func ping(w http.ResponseWriter, r *http.Request) {
 func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 	franchise, err := dundee.RetrieveFranchise(r)
 	if err != nil {
+		w.WriteHeader(400)
 		fmt.Fprint(w, err)
 		return
 	}
 
+	w.WriteHeader(201)
 	fmt.Fprint(w, franchise)
 }
