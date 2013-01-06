@@ -2,6 +2,8 @@ package main
 
 import (
 	"dundee"
+	"dundee/cuepoints"
+	"dundee/liveevents"
 	"dundee/streams"
 	"fmt"
 	"log"
@@ -43,6 +45,13 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	cuePoint, err := cuepoints.New(r)
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprint(w, err)
+		return
+	}
+
 	streamSlice, err := streams.Retrieve(config)
 	if err != nil {
 		w.WriteHeader(500)
@@ -60,6 +69,25 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 	//Beyond this point the client doesn't care - return 201
 	w.WriteHeader(201)
 	fmt.Fprint(w, franchise)
+
+	liveEvents, err := liveevents.Retrieve(config)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	eventID, elemental, err := liveevents.Find(franchise, liveEvents)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = cuepoints.Inject(eventID, elemental, cuePoint)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 }
 
 func ping(w http.ResponseWriter, r *http.Request) {

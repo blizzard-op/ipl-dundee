@@ -5,7 +5,8 @@ import (
 )
 
 type Config struct {
-	Port        string
-	Elementals  []elemental.ElementalServer
-	Streams_url string
+	Port             string
+	Elementals       []elemental.ElementalServer
+	Streams_url      string
+	Live_events_path string
 }

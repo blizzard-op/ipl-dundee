@@ -1,11 +1,12 @@
 package elemental
 
 import (
+	"errors"
 	"io/ioutil"
 	"net/http"
 )
 
-func ExecuteRequest(r *http.Request) (*[]byte, error) {
+func ExecuteRequest(r *http.Request) (*http.Response, error) {
 	client := new(http.Client)
 
 	resp, err := client.Do(r)
@@ -14,10 +15,9 @@ func ExecuteRequest(r *http.Request) (*[]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	respBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
+	if resp.StatusCode != 200 {
+		return nil, errors.New("Request to elemental did not return 200 (ok).")
 	}
 
-	return &respBody, nil
+	return resp, nil
 }
