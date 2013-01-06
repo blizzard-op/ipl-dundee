@@ -1,5 +1,5 @@
 package liveevents
 
-func Find(franchise string, liveEvents []LiveEvent) {
+func Find(franchise string, liveEventResults []LiveEventResult) {
 
 }

@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 )
 
-func Retrieve(config *dundee.Config) ([]LiveEvent, error) {
-	var liveEvents = make([]LiveEvent, 3)
+func Retrieve(config *dundee.Config) ([]LiveEventResult, error) {
+	var results = make([]LiveEventResult, 3)
 
 	for _, server := range config.Elementals {
 		data, err := getXML(server, config.Live_events_path)
@@ -17,18 +17,17 @@ func Retrieve(config *dundee.Config) ([]LiveEvent, error) {
 		}
 
 		var tempLiveEvents []liveEvents
+		var result = LiveEventResult{elemental: &server, liveEvents: &tempLiveEvents}
+
 		err = xml.Unmarshal(data, &tempLiveEvents)
 		if err != nil {
 			continue
 		}
-		liveEvents.append(tempLiveEvents)
+
+		results.append(result)
 	}
 
-	if len(liveEvents) == 0 {
-		return nil, errors.New("No Live Events were found.")
-	}
-
-	return liveEvents, nil
+	return results, nil
 }
 
 func getXML(elementalServer elemental.ElementalServer, liveEventsPath string) ([]bytes, error) {

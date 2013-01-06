@@ -70,13 +70,13 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(201)
 	fmt.Fprint(w, franchise)
 
-	liveEvents, err := liveevents.Retrieve(config)
+	liveEventResults, err := liveevents.Retrieve(config)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	eventID, elemental, err := liveevents.Find(franchise, liveEvents)
+	eventID, elemental, err := liveevents.Find(franchise, liveEventResults)
 	if err != nil {
 		fmt.Println(err)
 		return
