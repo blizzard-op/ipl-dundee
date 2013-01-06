@@ -1,7 +1,6 @@
 package streams
 
 import (
-	"dundee/types"
 	"errors"
 	"net/http"
 )
@@ -18,7 +17,7 @@ func ValidateID(r *http.Request) (string, error) {
 
 //Exists takes a streamID and an array of streams and searches
 //for a stream matching the given streamID - returning the franchise
-func Exists(streamID string, streams []types.Stream) (string, error) {
+func Exists(streamID string, streams []Stream) (string, error) {
 	for _, value := range streams {
 		if value.Id == streamID {
 			return value.Franchise.Name, nil

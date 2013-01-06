@@ -1,4 +1,4 @@
-package types
+package streams
 
 type Stream struct {
 	Id        string

@@ -3,39 +3,36 @@ package main
 import (
 	"dundee"
 	"dundee/streams"
-	"dundee/types"
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 )
 
-var config *types.Config
+var config *dundee.Config
 
 func main() {
-	//Get config_path
-	var config_path string
-	if len(os.Args) > 1 {
-		config_path = os.Args[1]
-	}
+	config = getConfig()
 
-	//Get config
-	var err error
-	config, err = dundee.GetConfig(config_path)
-	if err != nil {
-		log.Fatalf("Dundee failed to read config at " + config_path + ". Aborting.\nReason: " + err.Error())
-	}
-	fmt.Println("Config loaded successfully. Dundee starting on port " + config.Port)
+	fmt.Println("Dundee starting on port " + config.Port)
 
 	//Set Routes
 	http.HandleFunc("/ping", ping)
 	http.HandleFunc("/injectcuepoint", injectCuePoint)
 
 	//Start server
-	err = http.ListenAndServe(config.Port, nil)
+	err := http.ListenAndServe(config.Port, nil)
 	if err != nil {
 		log.Fatalf("Failed to start Dundee on port "+config.Port, err)
 	}
+}
+
+func getConfig() *dundee.Config {
+	con, err := dundee.GetConfig()
+	if err != nil {
+		log.Fatalf("Dundee failed to read config. Aborting.\nReason: " + err.Error())
+	}
+	fmt.Println("Config loaded successfully.")
+	return con
 }
 
 func injectCuePoint(w http.ResponseWriter, r *http.Request) {

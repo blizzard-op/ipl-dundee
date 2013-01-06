@@ -1,14 +1,14 @@
 package streams
 
 import (
-	"dundee/types"
+	"dundee"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
 
-func Retrieve(config *types.Config) ([]types.Stream, error) {
-	var streams []types.Stream
+func Retrieve(config *dundee.Config) ([]Stream, error) {
+	var streams []Stream
 
 	jsonBytes, err := getJSON(config)
 	if err != nil {
@@ -23,7 +23,7 @@ func Retrieve(config *types.Config) ([]types.Stream, error) {
 	return streams, nil
 }
 
-func getJSON(config *types.Config) ([]byte, error) {
+func getJSON(config *dundee.Config) ([]byte, error) {
 	resp, err := http.Get(config.Streams_url)
 	if err != nil {
 		return nil, err
