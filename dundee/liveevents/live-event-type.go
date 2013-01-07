@@ -5,7 +5,11 @@ import (
 )
 
 type LiveEvent struct {
-	XMLName xml.Name `xml:"live_event"`
+	XMLName xml.Name `xml:live_event`
 	Path    string   `xml:"href,attr"`
-	Title   string   `xml:user_data>title`
+	User_data
+}
+
+type User_data struct {
+	Franchise string `xml:franchise`
 }

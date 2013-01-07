@@ -11,8 +11,12 @@ import (
 	"time"
 )
 
+const protocol = "http://"
+
 func GenerateRequest(method string, elementalServer *ElementalServer, elementalPath string, body []byte) (*http.Request, error) {
-	req, err := http.NewRequest(method, path.Join(elementalServer.URL, elementalPath), bytes.NewReader(body))
+	url := protocol + path.Join(elementalServer.Hostname, elementalPath)
+
+	req, err := http.NewRequest(method, url, bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}

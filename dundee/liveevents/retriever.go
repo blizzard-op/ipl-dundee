@@ -3,13 +3,12 @@ package liveevents
 import (
 	"dundee/elemental"
 	"encoding/xml"
-	"io/ioutil"
 )
 
 const liveEventsPath = "/live_events"
 
 func Retrieve(elementalServers []elemental.ElementalServer) ([]LiveEventResult, error) {
-	var results = make([]LiveEventResult, 3)
+	var results = make([]LiveEventResult, 0)
 
 	for _, server := range elementalServers {
 		data, err := getXML(&server)
@@ -37,12 +36,7 @@ func getXML(elementalServer *elemental.ElementalServer) ([]byte, error) {
 		return nil, err
 	}
 
-	resp, err := elemental.ExecuteRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
+	_, body, err := elemental.ExecuteRequest(req)
 	if err != nil {
 		return nil, err
 	}

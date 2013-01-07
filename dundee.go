@@ -71,6 +71,7 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, franchise)
 
 	liveEventResults, err := liveevents.Retrieve(config.Elementals)
+	fmt.Println(liveEventResults)
 	if err != nil {
 		fmt.Println(err)
 		return

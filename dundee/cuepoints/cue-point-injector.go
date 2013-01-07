@@ -17,7 +17,7 @@ func Inject(eventPath string, elementalServer *elemental.ElementalServer, cuePoi
 		return err
 	}
 
-	_, err = elemental.ExecuteRequest(req)
+	_, _, err = elemental.ExecuteRequest(req)
 	if err != nil {
 		return err
 	}

@@ -1,8 +1,8 @@
 package elemental
 
 type ElementalServer struct {
-	Name   string
-	URL    string
-	ApiKey string
-	Login  string
+	Name     string
+	Hostname string
+	ApiKey   string
+	Login    string
 }
