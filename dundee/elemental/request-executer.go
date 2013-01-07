@@ -2,7 +2,6 @@ package elemental
 
 import (
 	"errors"
-	"io/ioutil"
 	"net/http"
 )
 

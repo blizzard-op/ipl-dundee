@@ -1,13 +1,15 @@
 package liveevents
 
 import (
-	"regex"
+	"dundee/elemental"
+	"errors"
+	"regexp"
 )
 
-func Find(franchise string, liveEventResults []LiveEventResult) (string, elemental.ElementalServer, error) {
+func Find(franchise string, liveEventResults []LiveEventResult) (string, *elemental.ElementalServer, error) {
 	for _, liveEventResult := range liveEventResults {
 		for _, liveEvent := range liveEventResult.LiveEvents {
-			found, _ := regex.MatchString(franchise, liveEvent.title)
+			found, _ := regexp.MatchString(franchise, liveEvent.Title)
 			if found == true {
 				return liveEvent.Path, liveEventResult.Elemental, nil
 			}

@@ -2,23 +2,22 @@ package cuepoints
 
 import (
 	"dundee/elemental"
+	"encoding/xml"
 	"path"
 )
 
-func Inject(eventPath string, elementalServer elemental.ElementalServer, cuePoint interface{}) error {
+func Inject(eventPath string, elementalServer *elemental.ElementalServer, cuePoint *interface{}) error {
 	body, err := xml.Marshal(cuePoint)
 	if err != nil {
 		return err
 	}
 
-	path := path.Join(elementalServer.URL, eventPath, "stream_metadata")
-
-	req, err := elemental.GenerateRequest("POST", elementalServer, path, body)
+	req, err := elemental.GenerateRequest("POST", elementalServer, path.Join(eventPath, "stream_metadata"), body)
 	if err != nil {
 		return err
 	}
 
-	resp, err = elemental.ExecuteRequest(req)
+	_, err = elemental.ExecuteRequest(req)
 	if err != nil {
 		return err
 	}

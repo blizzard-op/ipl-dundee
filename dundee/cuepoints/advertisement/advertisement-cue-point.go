@@ -1,11 +1,17 @@
 package advertisement
 
 import (
+	"dundee/cuepoints"
 	"encoding/xml"
+	"fmt"
+	"net/http"
 )
 
 func init() {
-	RegisterCuePointType("advertisement", New)
+	err := cuepoints.RegisterCuePointType("advertisement", New)
+	if err != nil {
+		fmt.Println("Failed to register cuepoint type.\n" + err.Error())
+	}
 }
 
 type cuePoint struct {
@@ -16,6 +22,6 @@ type cuePoint struct {
 	Value    string   `xml:"value"`
 }
 
-func New(r *http.Request) (*cuePoint, error) {
+func New(r *http.Request) (interface{}, error) {
 	return &cuePoint{Category: "Video Cue Point", Action: "13", Label: "Ad Name", Value: "30"}, nil
 }

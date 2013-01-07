@@ -3,6 +3,7 @@ package main
 import (
 	"dundee"
 	"dundee/cuepoints"
+	"dundee/cuepoints/advertisement"
 	"dundee/liveevents"
 	"dundee/streams"
 	"fmt"
@@ -70,7 +71,7 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(201)
 	fmt.Fprint(w, franchise)
 
-	liveEventResults, err := liveevents.Retrieve(config)
+	liveEventResults, err := liveevents.Retrieve(config.Elementals)
 	if err != nil {
 		fmt.Println(err)
 		return
