@@ -70,24 +70,30 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(201)
 	fmt.Fprint(w, franchise)
 
-	liveEventResults, err := liveevents.Retrieve(config.Elementals)
-	fmt.Println(liveEventResults)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	go func() {
 
-	eventPath, elemental, err := liveevents.Find(franchise, liveEventResults)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+		liveEventResults, err := liveevents.Retrieve(config.Elementals)
+		fmt.Println(liveEventResults)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 
-	err = cuepoints.Inject(eventPath, elemental, cuePoint)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+		eventPath, elemental, err := liveevents.Find(franchise, liveEventResults)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		err = cuepoints.Inject(eventPath, elemental, cuePoint)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("Everything worked.")
+
+	}()
 
 }
 

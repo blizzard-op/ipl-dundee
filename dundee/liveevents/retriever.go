@@ -3,28 +3,35 @@ package liveevents
 import (
 	"dundee/elemental"
 	"encoding/xml"
+	"fmt"
 )
 
 const liveEventsPath = "/live_events"
 
-func Retrieve(elementalServers []elemental.ElementalServer) ([]LiveEventResult, error) {
-	var results = make([]LiveEventResult, 0)
+func Retrieve(elementalServers []elemental.ElementalServer) ([]Live_event_list, error) {
+	var results = make([]Live_event_list, 0)
 
 	for _, server := range elementalServers {
 		data, err := getXML(&server)
 		if err != nil {
+			fmt.Println(err)
 			continue
 		}
 
-		var tempLiveEvents []LiveEvent
-		var result = LiveEventResult{Elemental: &server, LiveEvents: tempLiveEvents}
+		var liveEventList Live_event_list
 
-		err = xml.Unmarshal(data, &tempLiveEvents)
+		err = xml.Unmarshal(data, &liveEventList)
 		if err != nil {
+			fmt.Println(err)
 			continue
 		}
 
-		results = append(results, result)
+		fmt.Println(len(liveEventList.Live_events))
+		fmt.Println(liveEventList.Live_events)
+
+		liveEventList.Elemental = &server
+
+		results = append(results, liveEventList)
 	}
 
 	return results, nil
