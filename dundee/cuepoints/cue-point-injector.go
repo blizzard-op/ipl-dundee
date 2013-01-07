@@ -2,17 +2,18 @@ package cuepoints
 
 import (
 	"dundee/elemental"
+	"path"
 )
 
-func Inject(eventID string, elementalServer elemental.ElementalServer, cuePoint interface{}) error {
+func Inject(eventPath string, elementalServer elemental.ElementalServer, cuePoint interface{}) error {
 	body, err := xml.Marshal(cuePoint)
 	if err != nil {
 		return err
 	}
 
-	path := elementalServer.URL + "/live_events/" + eventID + "/stream_metadata"
+	path := path.Join(elementalServer.URL, eventPath, "stream_metadata")
 
-	req, err := elemental.GenerateRequest(elementalServer, path, body)
+	req, err := elemental.GenerateRequest("POST", elementalServer, path, body)
 	if err != nil {
 		return err
 	}

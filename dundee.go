@@ -76,13 +76,13 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	eventID, elemental, err := liveevents.Find(franchise, liveEventResults)
+	eventPath, elemental, err := liveevents.Find(franchise, liveEventResults)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	err = cuepoints.Inject(eventID, elemental, cuePoint)
+	err = cuepoints.Inject(eventPath, elemental, cuePoint)
 	if err != nil {
 		fmt.Println(err)
 		return

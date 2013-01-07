@@ -7,10 +7,11 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+	"path"
 )
 
-func GenerateRequest(elementalServer *ElementalServer, path string, body []byte) (*http.Request, error) {
-	req, err := http.NewRequest("POST", elementalServer.URL+path, bytes.NewReader(body))
+func GenerateRequest(method string, elementalServer *ElementalServer, path string, body []byte) (*http.Request, error) {
+	req, err := http.NewRequest(method, path.Join(elementalServer.URL, path), bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
@@ -27,12 +28,21 @@ func GenerateRequest(elementalServer *ElementalServer, path string, body []byte)
 }
 
 func generateAuthKey(elementalServer *ElementalServer, path string) (string, string) {
+	//hashed_key = Digest::MD5.hexdigest("#{key}#{Digest::MD5.hexdigest("#{url.path}#{login}#{key}#{expires}")}")
 	currTime := time.Now()
 	expireTime := currTime.Add(time.Duration(5) * time.Second)
 	expires := strconv.FormatInt(expireTime.Unix(), 10)
 
-	h := md5.New()
-	io.WriteString(h, path)
+	h2 := md5.New()
+	io.WriteString(h2, path)
+	io.WriteString(h2, elementalServer.AuthUser)
+	io.WriteString(h2, elementalServer.AppKey)
+	io.WriteString(h2, expires)
+	h2String := string(h2.Sum(nil))
 
-	return expires, string(h.Sum(nil))
+	h1 := md5.New()
+	io.WriteString(h1, elementalServer.AppKey)
+	io.WriteString(h1, h2String)
+
+	return expires, string(h2.Sum(nil))
 }

@@ -31,7 +31,7 @@ func Retrieve(config *dundee.Config) ([]LiveEventResult, error) {
 }
 
 func getXML(elementalServer elemental.ElementalServer, liveEventsPath string) ([]bytes, error) {
-	req, err := elemental.GenerateRequest(elementalServer, liveEventsPath)
+	req, err := elemental.GenerateRequest("GET", elementalServer, liveEventsPath)
 	if err != nil {
 		return nil, err
 	}

@@ -5,6 +5,6 @@ import (
 )
 
 type LiveEventResult struct {
-	elemental  *elemental.ElementalServer
-	liveEvents *[]LiveEvent
+	Elemental  *elemental.ElementalServer
+	LiveEvents *[]LiveEvent
 }
