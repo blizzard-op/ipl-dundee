@@ -2,14 +2,12 @@ package cuepoints
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 )
 
-var cuePointTypes = make(map[string]func(r *http.Request) (*interface{}, error), 5)
+var cuePointTypes = make(map[string]func(r *http.Request) (interface{}, error), 5)
 
-func RegisterCuePointType(name string, cp func(r *http.Request) (*interface{}, error)) error {
-	fmt.Println("Attempting to register cue point.")
+func RegisterCuePointType(name string, cp func(r *http.Request) (interface{}, error)) error {
 	if cuePointTypes[name] != nil {
 		return errors.New("A cue point is already registered under the name: " + name)
 	}
@@ -17,7 +15,7 @@ func RegisterCuePointType(name string, cp func(r *http.Request) (*interface{}, e
 	return nil
 }
 
-func New(r *http.Request) (*interface{}, error) {
+func New(r *http.Request) (interface{}, error) {
 	cpType := r.FormValue("cue-point-type")
 	if cuePointTypes[cpType] == nil {
 		return nil, errors.New("Invalid Cue Point type.")

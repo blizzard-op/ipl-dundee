@@ -3,7 +3,6 @@ package main
 import (
 	"dundee"
 	"dundee/cuepoints"
-	"dundee/cuepoints/advertisement"
 	"dundee/liveevents"
 	"dundee/streams"
 	"fmt"

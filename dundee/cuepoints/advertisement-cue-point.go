@@ -1,18 +1,10 @@
-package advertisement
+package cuepoints
 
 import (
-	"dundee/cuepoints"
 	"encoding/xml"
 	"fmt"
 	"net/http"
 )
-
-func init() {
-	err := cuepoints.RegisterCuePointType("advertisement", New)
-	if err != nil {
-		fmt.Println("Failed to register cuepoint type.\n" + err.Error())
-	}
-}
 
 type cuePoint struct {
 	XMLName  xml.Name `xml:"data"`
@@ -22,6 +14,13 @@ type cuePoint struct {
 	Value    string   `xml:"value"`
 }
 
-func New(r *http.Request) (interface{}, error) {
+func init() {
+	err := RegisterCuePointType("advertisement", new)
+	if err != nil {
+		fmt.Println("Failed to register cuepoint type.\n" + err.Error())
+	}
+}
+
+func new(r *http.Request) (interface{}, error) {
 	return &cuePoint{Category: "Video Cue Point", Action: "13", Label: "Ad Name", Value: "30"}, nil
 }

@@ -6,7 +6,7 @@ import (
 	"path"
 )
 
-func Inject(eventPath string, elementalServer *elemental.ElementalServer, cuePoint *interface{}) error {
+func Inject(eventPath string, elementalServer *elemental.ElementalServer, cuePoint interface{}) error {
 	body, err := xml.Marshal(cuePoint)
 	if err != nil {
 		return err
