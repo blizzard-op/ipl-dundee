@@ -18,8 +18,8 @@ func main() {
 	fmt.Println("Dundee starting on port " + config.Port)
 
 	//Set Routes
-	http.HandleFunc("/ping", ping)
-	http.HandleFunc("/injectcuepoint", injectCuePoint)
+	http.HandleFunc("/ping", pingHandler)
+	http.HandleFunc("/cuepoints", cuePointsHandler)
 
 	//Start server
 	err := http.ListenAndServe(config.Port, nil)
@@ -37,12 +37,12 @@ func getConfig() *dundee.Config {
 	return con
 }
 
-func injectCuePoint(w http.ResponseWriter, r *http.Request) {
-	streamID, err := streams.ValidateID(r)
-	if err != nil {
+func cuePointsHandler(w http.ResponseWriter, r *http.Request) {
+
+	streamID := r.FormValue("streamid")
+	if streamID == nil {
 		w.WriteHeader(400)
-		fmt.Fprint(w, err)
-		return
+		fmt.Fprint(w, errors.New("You must include a valid streamid."))
 	}
 
 	cuePoint, err := cuepoints.New(r)
@@ -52,14 +52,20 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	streamSlice, err := streams.Retrieve(config)
+	streamData, err := streams.RetrieveData(config.Streams_url)
 	if err != nil {
 		w.WriteHeader(500)
 		fmt.Fprint(w, err)
 		return
 	}
 
-	franchise, err := streams.Exists(streamID, streamSlice)
+	streamList, err := streams.ProcessData(streamData)
+	if err != nil {
+		w.WriteHeader(500)
+		fmt.Fprint(w, err)
+	}
+
+	franchise, err := streams.ValidateStreamID(streamID, streamList)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprint(w, err)
@@ -91,10 +97,9 @@ func injectCuePoint(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}()
-
 }
 
-func ping(w http.ResponseWriter, r *http.Request) {
+func PingHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Header().Set("Cache-Control", "must-revalidate, no-cache, no-store")
 	w.Header().Set("Connection", "close")

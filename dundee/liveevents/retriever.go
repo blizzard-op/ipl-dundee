@@ -11,7 +11,7 @@ func Retrieve(elementalServers []elemental.ElementalServer) ([]Live_event_list, 
 	var results = make([]Live_event_list, 0)
 
 	for _, server := range elementalServers {
-		data, err := getXML(&server)
+		data, err := retrieveData(&server)
 		if err != nil {
 			continue
 		}
@@ -31,7 +31,7 @@ func Retrieve(elementalServers []elemental.ElementalServer) ([]Live_event_list, 
 	return results, nil
 }
 
-func getXML(elementalServer *elemental.ElementalServer) ([]byte, error) {
+func retriveData(elementalServer *elemental.ElementalServer) ([]byte, error) {
 	req, err := elemental.GenerateRequest("GET", elementalServer, liveEventsPath, nil)
 	if err != nil {
 		return nil, err
