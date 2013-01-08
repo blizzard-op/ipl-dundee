@@ -3,6 +3,7 @@ package liveevents
 import (
 	"dundee/streams"
 	"errors"
+	"fmt"
 )
 
 func Find(stream *streams.Stream, liveEvents []Live_event) (*Live_event, error) {
@@ -12,5 +13,5 @@ func Find(stream *streams.Stream, liveEvents []Live_event) (*Live_event, error) 
 			return liveEvent, nil
 		}
 	}
-	return nil, errors.New("Unable to find a live event relating to the provided stream.")
+	return nil, errors.New(fmt.Sprintf("%s%+v", "Unable to find a live event relating to the provided stream: ", stream))
 }

@@ -31,6 +31,7 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
 	stream, err := streams.Find(streamID, w)
 	if err != nil {
 		fmt.Fprint(w, err)
+		return
 	}
 
 	//Beyond this point the client doesn't care - return 201
