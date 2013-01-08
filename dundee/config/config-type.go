@@ -1,4 +1,4 @@
-package dundee
+package config
 
 import (
 	"dundee/elemental"

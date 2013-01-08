@@ -31,7 +31,7 @@ func Retrieve(elementalServers []elemental.ElementalServer) ([]Live_event_list, 
 	return results, nil
 }
 
-func retriveData(elementalServer *elemental.ElementalServer) ([]byte, error) {
+func retrieveData(elementalServer *elemental.ElementalServer) ([]byte, error) {
 	req, err := elemental.GenerateRequest("GET", elementalServer, liveEventsPath, nil)
 	if err != nil {
 		return nil, err

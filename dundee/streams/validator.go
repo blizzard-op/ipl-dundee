@@ -2,7 +2,6 @@ package streams
 
 import (
 	"errors"
-	"net/http"
 )
 
 func ValidateStreamID(streamID string, streams []Stream) (string, error) {

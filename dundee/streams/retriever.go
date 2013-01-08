@@ -1,7 +1,7 @@
 package streams
 
 import (
-	"dundee"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
@@ -25,7 +25,7 @@ func RetrieveData(url string) ([]byte, error) {
 func ProcessData(b []byte) ([]Stream, error) {
 	var streams []Stream
 
-	err = json.Unmarshal(b, &streams)
+	err := json.Unmarshal(b, &streams)
 	if err != nil {
 		return nil, err
 	}
