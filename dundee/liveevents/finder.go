@@ -10,8 +10,7 @@ import (
 func Find(stream Stream, liveEventLists []Live_event_list) (string, *elemental.ElementalServer, error) {
 	for _, liveEventList := range liveEventLists {
 		for _, liveEvent := range liveEventList.Live_events {
-			found, _ := regexp.MatchString(franchise, liveEvent.Name)
-			if found == true && liveEvent.Status == "running" {
+			if Match(stream, liveEvent) {
 				return liveEvent.Path, liveEventList.Elemental, nil
 			}
 		}

@@ -39,19 +39,19 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
 
 	go func() {
 
-		liveEventResults, err := liveevents.Retrieve(conf.Elementals)
+		liveEvents, err := liveevents.Retrieve(conf.Elementals)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		eventPath, elemental, err := liveevents.Find(stream, liveEventResults)
+		eventID, elemental, err := liveevents.Find(stream, liveEvents)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		err = cuepoints.Inject(eventPath, elemental, cuePoint)
+		err = cuepoints.Inject(eventID, elemental, cuePoint)
 		if err != nil {
 			fmt.Println(err)
 			return

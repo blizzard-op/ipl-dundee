@@ -7,31 +7,42 @@ import (
 
 const liveEventsPath = "/live_events"
 
-func Retrieve(elementalServers []elemental.ElementalServer) ([]Live_event_list, error) {
-	var results = make([]Live_event_list, 0)
+func Retrieve(elementalServers []elemental.ElementalServer) []Live_event {
+	var results = make([]Live_event)
+	var pipe = make(chan []Live_event, len(elementalServers))
 
 	for _, server := range elementalServers {
-		data, err := retrieveData(&server)
-		if err != nil {
-			continue
-		}
-
-		var liveEventList Live_event_list
-
-		err = xml.Unmarshal(data, &liveEventList)
-		if err != nil {
-			continue
-		}
-
-		liveEventList.Elemental = &server
-
-		results = append(results, liveEventList)
+		go retrieveServerEvents(pipe, &server)
 	}
 
-	return results, nil
+	for _, _ := range elementalServers {
+		results = append(results, <-pipe)
+	}
+
+	return results
 }
 
-func retrieveData(elementalServer *elemental.ElementalServer) ([]byte, error) {
+func retrieveServerEvents(pipe chan []Live_event, server *ElementalServer) {
+	var liveEventList Live_event_list
+	defer pipe <- liveEventList.Live_events
+
+	data, err := retrieveServerData(server)
+	if err != nil {
+		return
+	}
+
+	err = xml.Unmarshal(data, &liveEventList)
+	if err != nil {
+		return
+	}
+
+	//Bind reference to server in each live event
+	for _, liveEvent := range liveEventList.Live_events {
+		liveEvent.Elemental = &server
+	}
+}
+
+func retrieveServerData(elementalServer *elemental.ElementalServer) ([]byte, error) {
 	req, err := elemental.GenerateRequest("GET", elementalServer, liveEventsPath, nil)
 	if err != nil {
 		return nil, err
