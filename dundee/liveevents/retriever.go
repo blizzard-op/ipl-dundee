@@ -11,12 +11,16 @@ func Retrieve(elementalServers []elemental.ElementalServer) []Live_event {
 	var results = make([]Live_event, 0)
 	var pipe = make(chan []Live_event, len(elementalServers))
 
-	for _, server := range elementalServers {
-		go retrieveServerEvents(pipe, &server)
+	for i, _ := range elementalServers {
+		server := &elementalServers[i]
+		go retrieveServerEvents(pipe, server)
 	}
 
 	for _, _ = range elementalServers {
-		results = append(results, <-pipe...)
+		result := <-pipe
+		if result != nil {
+			results = append(results, result...)
+		}
 	}
 
 	return results
@@ -39,8 +43,8 @@ func retrieveServerEvents(pipe chan []Live_event, server *elemental.ElementalSer
 	}
 
 	//Bind reference to server in each live event
-	for _, liveEvent := range liveEventList.Live_events {
-		liveEvent.Elemental = server
+	for i, _ := range liveEventList.Live_events {
+		liveEventList.Live_events[i].Elemental = server
 	}
 }
 

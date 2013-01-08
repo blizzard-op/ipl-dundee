@@ -4,7 +4,6 @@ import (
 	"dundee/elemental"
 	"dundee/liveevents"
 	"encoding/xml"
-	"fmt"
 	"path"
 )
 
@@ -20,14 +19,10 @@ func Inject(liveEvent *liveevents.Live_event, cuePoint interface{}) error {
 		return err
 	}
 
-	fmt.Println("Completed generating request injection")
-
 	_, _, err = elemental.ExecuteRequest(req)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("Completed injection")
 
 	return nil
 }
