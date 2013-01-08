@@ -28,24 +28,9 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	streamData, err := streams.RetrieveData(conf.Streams_url)
+	stream, err := streams.Find(streamID, w)
 	if err != nil {
-		w.WriteHeader(500)
 		fmt.Fprint(w, err)
-		return
-	}
-
-	streamList, err := streams.ProcessData(streamData)
-	if err != nil {
-		w.WriteHeader(500)
-		fmt.Fprint(w, err)
-	}
-
-	franchise, err := streams.ValidateStreamID(streamID, streamList)
-	if err != nil {
-		w.WriteHeader(400)
-		fmt.Fprint(w, err)
-		return
 	}
 
 	//Beyond this point the client doesn't care - return 201
@@ -60,7 +45,7 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		eventPath, elemental, err := liveevents.Find(franchise, liveEventResults)
+		eventPath, elemental, err := liveevents.Find(stream, liveEventResults)
 		if err != nil {
 			fmt.Println(err)
 			return

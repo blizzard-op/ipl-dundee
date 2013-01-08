@@ -2,11 +2,12 @@ package liveevents
 
 import (
 	"dundee/elemental"
+	"dundee/streams"
 	"errors"
 	"regexp"
 )
 
-func Find(franchise string, liveEventLists []Live_event_list) (string, *elemental.ElementalServer, error) {
+func Find(stream Stream, liveEventLists []Live_event_list) (string, *elemental.ElementalServer, error) {
 	for _, liveEventList := range liveEventLists {
 		for _, liveEvent := range liveEventList.Live_events {
 			found, _ := regexp.MatchString(franchise, liveEvent.Name)
