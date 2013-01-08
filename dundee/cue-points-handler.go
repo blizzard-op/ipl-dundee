@@ -35,23 +35,19 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
 
 	//Beyond this point the client doesn't care - return 201
 	w.WriteHeader(201)
-	fmt.Fprint(w, franchise)
+	fmt.Fprint(w, stream.Franchise.Name)
 
 	go func() {
 
-		liveEvents, err := liveevents.Retrieve(conf.Elementals)
+		liveEvents := liveevents.Retrieve(conf.Elementals)
+
+		liveEvent, err := liveevents.Find(stream, liveEvents)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		eventID, elemental, err := liveevents.Find(stream, liveEvents)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		err = cuepoints.Inject(eventID, elemental, cuePoint)
+		err = cuepoints.Inject(liveEvent, cuePoint)
 		if err != nil {
 			fmt.Println(err)
 			return
