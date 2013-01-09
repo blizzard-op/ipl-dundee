@@ -14,10 +14,7 @@ func Gather(elementalServers []elemental.ElementalServer) []Live_event {
 	}
 
 	for _, _ = range elementalServers {
-		result := <-pipe
-		if result != nil {
-			results = append(results, result...)
-		}
+		results = append(results, <-pipe...)
 	}
 
 	return results
