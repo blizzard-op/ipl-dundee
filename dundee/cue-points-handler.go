@@ -1,23 +1,22 @@
 package dundee
 
 import (
-	"dundee/config"
 	"dundee/cuepoints"
 	"dundee/liveevents"
 	"dundee/streams"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 )
 
-var conf = config.Get()
-
-func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
+func CuePointsHandler(w http.ResponseWriter, r *http.Request, c *Config) {
 
 	streamID, cuePointType, err := fetchParams(r)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprint(w, err)
+		log.Println(err)
 		return
 	}
 
@@ -25,40 +24,41 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprint(w, err)
+		log.Println(err)
 		return
 	}
 
-	stream, err := resolveStream(streamID, w)
+	stream, err := resolveStream(streamID, w, c)
 	if err != nil {
 		fmt.Fprint(w, err)
+		log.Println(err)
 		return
 	}
 
-	//Beyond this point the client doesn't care - return 201
+	go injectCuePoint(stream, cuePoint, c)
+
 	w.WriteHeader(201)
 	fmt.Fprint(w, stream.Franchise.Name)
-
-	go injectCuePoint(stream, cuePoint)
 }
 
-func injectCuePoint(stream *streams.Stream, cuePoint interface{}) {
-	liveEvents := liveevents.Gather(conf.Elementals)
+func injectCuePoint(stream *streams.Stream, cuePoint interface{}, c *Config) {
+	liveEvents := liveevents.Gather(c.Elementals)
 
 	liveEvent, err := liveevents.Find(stream, liveEvents)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 
 	err = cuepoints.Inject(liveEvent, cuePoint)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 }
 
-func resolveStream(streamID string, w http.ResponseWriter) (*streams.Stream, error) {
-	streamData, err := streams.Fetch(conf.Streams_url)
+func resolveStream(streamID string, w http.ResponseWriter, c *Config) (*streams.Stream, error) {
+	streamData, err := streams.Fetch(c.Streams_url)
 	if err != nil {
 		w.WriteHeader(500)
 		return nil, err
