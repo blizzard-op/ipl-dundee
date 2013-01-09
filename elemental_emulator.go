@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
 const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 <live_event_list>
-<live_event href="/live_events/74" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-08-13</name>
+<live_event href="/api/live_events/74" version="1.5.4.1235" product="Elemental Live">
+  <name>01-08-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -64,8 +65,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
   <start_time></start_time>
   <elapsed></elapsed>
 </live_event>
-<live_event href="/live_events/73" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-08-13</name>
+<live_event href="/api/live_events/73" version="1.5.4.1235" product="Elemental Live">
+  <name>01-08-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -121,8 +122,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
   <start_time></start_time>
   <elapsed></elapsed>
 </live_event>
-<live_event href="/live_events/72" version="1.5.4.1235" product="Elemental Live">
-  <name>Shootmania: 01-08-13</name>
+<live_event href="/api/live_events/72" version="1.5.4.1235" product="Elemental Live">
+  <name>01-08-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -178,8 +179,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
   <start_time></start_time>
   <elapsed></elapsed>
 </live_event>
-<live_event href="/live_events/71" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-07-13</name>
+<live_event href="/api/live_events/71" version="1.5.4.1235" product="Elemental Live">
+  <name>01-08-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -242,8 +243,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/70" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-07-13</name>
+<live_event href="/api/live_events/70" version="1.5.4.1235" product="Elemental Live">
+  <name>01-07-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -306,8 +307,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/69" version="1.5.4.1235" product="Elemental Live">
-  <name>Shootmania: 01-07-13</name>
+<live_event href="/api/live_events/69" version="1.5.4.1235" product="Elemental Live">
+  <name>01-07-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -370,8 +371,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/68" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-06-13</name>
+<live_event href="/api/live_events/68" version="1.5.4.1235" product="Elemental Live">
+  <name>01-06-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -440,8 +441,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/67" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-06-13</name>
+<live_event href="/api/live_events/67" version="1.5.4.1235" product="Elemental Live">
+  <name>01-06-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -510,8 +511,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/66" version="1.5.4.1235" product="Elemental Live">
-  <name>Shootmania: 01-06-13</name>
+<live_event href="/api/live_events/66" version="1.5.4.1235" product="Elemental Live">
+  <name>01-06-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -580,8 +581,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/65" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-05-13</name>
+<live_event href="/api/live_events/65" version="1.5.4.1235" product="Elemental Live">
+  <name>01-05-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -650,8 +651,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/64" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-05-13</name>
+<live_event href="/api/live_events/64" version="1.5.4.1235" product="Elemental Live">
+  <name>01-05-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -720,8 +721,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/63" version="1.5.4.1235" product="Elemental Live">
-  <name>Shootmania: 01-05-13</name>
+<live_event href="/api/live_events/63" version="1.5.4.1235" product="Elemental Live">
+  <name>01-05-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -790,8 +791,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/62" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-04-13</name>
+<live_event href="/api/live_events/62" version="1.5.4.1235" product="Elemental Live">
+  <name>01-04-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -860,8 +861,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/61" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-04-13</name>
+<live_event href="/api/live_events/61" version="1.5.4.1235" product="Elemental Live">
+  <name>01-04-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -930,8 +931,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/60" version="1.5.4.1235" product="Elemental Live">
-  <name>Shootmania: 01-04-13</name>
+<live_event href="/api/live_events/60" version="1.5.4.1235" product="Elemental Live">
+  <name>01-04-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -1000,8 +1001,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/59" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-03-13</name>
+<live_event href="/api/live_events/59" version="1.5.4.1235" product="Elemental Live">
+  <name>01-03-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -1070,8 +1071,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/58" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-03-13</name>
+<live_event href="/api/live_events/58" version="1.5.4.1235" product="Elemental Live">
+  <name>01-03-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -1140,8 +1141,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/57" version="1.5.4.1235" product="Elemental Live">
-  <name>Shootmania: 01-03-13</name>
+<live_event href="/api/live_events/57" version="1.5.4.1235" product="Elemental Live">
+  <name>01-03-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -1210,8 +1211,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/56" version="1.5.4.1235" product="Elemental Live">
-  <name>League of Legends: 01-02-13</name>
+<live_event href="/api/live_events/56" version="1.5.4.1235" product="Elemental Live">
+  <name>01-02-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -1280,8 +1281,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/live_events/55" version="1.5.4.1235" product="Elemental Live">
-  <name>StarCraft 2: 01-02-13</name>
+<live_event href="/api/live_events/55" version="1.5.4.1235" product="Elemental Live">
+  <name>01-02-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
     <order>1</order>
@@ -1354,7 +1355,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 </live_event_list>`
 
 func main() {
-	http.HandleFunc("/live_events", liveEventList)
+	http.HandleFunc("/api/live_events", liveEventList)
+	http.HandleFunc("/api/live_events/", returnBody)
 
 	err := http.ListenAndServe(":8009", nil)
 	if err != nil {
@@ -1365,4 +1367,16 @@ func main() {
 func liveEventList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-type", "application/xml")
 	fmt.Fprint(w, xmlString)
+}
+
+func returnBody(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("Error reading request body.")
+	}
+	defer r.Body.Close()
+
+	fmt.Println("Recieved a cuepoint directed at ", r.URL.String())
+	fmt.Println(string(body))
+
 }

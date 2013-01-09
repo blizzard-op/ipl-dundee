@@ -38,7 +38,7 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request, c *Config) {
 	go injectCuePoint(stream, cuePoint, c)
 
 	w.WriteHeader(201)
-	fmt.Fprint(w, stream.Franchise.Name)
+	fmt.Fprint(w, stream.Name)
 }
 
 func injectCuePoint(stream *streams.Stream, cuePoint interface{}, c *Config) {
@@ -55,6 +55,8 @@ func injectCuePoint(stream *streams.Stream, cuePoint interface{}, c *Config) {
 		log.Println(err)
 		return
 	}
+
+	log.Println("Successfully injected cuepoint into event:", liveEvent.Name)
 }
 
 func resolveStream(streamID string, w http.ResponseWriter, c *Config) (*streams.Stream, error) {
