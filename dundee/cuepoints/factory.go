@@ -15,8 +15,7 @@ func RegisterCuePointType(name string, cp func(r *http.Request) (interface{}, er
 	return nil
 }
 
-func New(r *http.Request) (interface{}, error) {
-	cpType := r.FormValue("cue-point-type")
+func New(cpType string, r *http.Request) (interface{}, error) {
 	if cuePointTypes[cpType] == nil {
 		return nil, errors.New("Invalid Cue Point type.")
 	}

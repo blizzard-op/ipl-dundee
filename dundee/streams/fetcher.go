@@ -1,12 +1,11 @@
 package streams
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
 
-func RetrieveData(url string) ([]byte, error) {
+func Fetch(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -20,15 +19,4 @@ func RetrieveData(url string) ([]byte, error) {
 	}
 
 	return body, nil
-}
-
-func ProcessData(b []byte) ([]Stream, error) {
-	var streams []Stream
-
-	err := json.Unmarshal(b, &streams)
-	if err != nil {
-		return nil, err
-	}
-
-	return streams, nil
 }
