@@ -4,7 +4,7 @@ import (
 	"dundee/elemental"
 )
 
-const liveEventsPath = "/live_events"
+const liveEventsPath = "api/live_events"
 
 func Fetch(elementalServer *elemental.ElementalServer) ([]byte, error) {
 	req, err := elemental.GenerateRequest("GET", elementalServer, liveEventsPath, nil)
