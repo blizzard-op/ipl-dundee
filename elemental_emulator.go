@@ -1355,8 +1355,8 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 </live_event_list>`
 
 func main() {
-	http.HandleFunc("/api/live_events", liveEventList)
-	http.HandleFunc("/api/live_events/", returnBody)
+	http.HandleFunc("/live_events", liveEventList)
+	http.HandleFunc("/live_events/", returnBody)
 
 	err := http.ListenAndServe(":8009", nil)
 	if err != nil {
