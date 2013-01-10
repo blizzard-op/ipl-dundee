@@ -14,7 +14,7 @@ func Inject(liveEvent *liveevents.Live_event, cuePoint interface{}) error {
 		return err
 	}
 
-	req, err := elemental.GenerateRequest("POST", liveEvent.Elemental, path.Join(liveEvent.Path, "stream_metadata"), body)
+	req, err := liveEvent.Elemental.GenerateRequest("POST", path.Join(liveEvent.Path, "stream_metadata"), body)
 	if err != nil {
 		return err
 	}

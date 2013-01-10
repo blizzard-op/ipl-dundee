@@ -13,17 +13,17 @@ import (
 
 const protocol = "http://"
 
-func GenerateRequest(method string, elementalServer *ElementalServer, elementalPath string, body []byte) (*http.Request, error) {
-	url := protocol + path.Join(elementalServer.Hostname, elementalPath)
+func (this *ElementalServer) GenerateRequest(method, elementalPath string, body []byte) (*http.Request, error) {
+	url := protocol + path.Join(this.Hostname, elementalPath)
 
 	req, err := http.NewRequest(method, url, bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
 
-	expires, authKey := generateAuthKey(elementalServer, elementalPath)
+	expires, authKey := this.generateAuthKey(elementalPath)
 
-	req.Header.Add("X-Auth-User", elementalServer.Login)
+	req.Header.Add("X-Auth-User", this.Login)
 	req.Header.Add("X-Auth-Expires", expires)
 	req.Header.Add("X-Auth-Key", authKey)
 	req.Header.Add("Accept", "application/xml")
@@ -32,21 +32,20 @@ func GenerateRequest(method string, elementalServer *ElementalServer, elementalP
 	return req, nil
 }
 
-func generateAuthKey(elementalServer *ElementalServer, elementalPath string) (string, string) {
-	//hashed_key = Digest::MD5.hexdigest("#{key}#{Digest::MD5.hexdigest("#{url.path}#{login}#{key}#{expires}")}")
+func (this *ElementalServer) generateAuthKey(elementalPath string) (string, string) {
 	currTime := time.Now()
 	expireTime := currTime.Add(time.Duration(10) * time.Second)
 	expires := strconv.FormatInt(expireTime.Unix(), 10)
 
 	h1 := md5.New()
 	io.WriteString(h1, elementalPath)
-	io.WriteString(h1, elementalServer.Login)
-	io.WriteString(h1, elementalServer.ApiKey)
+	io.WriteString(h1, this.Login)
+	io.WriteString(h1, this.ApiKey)
 	io.WriteString(h1, expires)
 	h1String := hex.EncodeToString(h1.Sum(nil))
 
 	h2 := md5.New()
-	io.WriteString(h2, elementalServer.ApiKey)
+	io.WriteString(h2, this.ApiKey)
 	io.WriteString(h2, h1String)
 	h2String := hex.EncodeToString(h2.Sum(nil))
 

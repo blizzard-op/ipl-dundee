@@ -7,7 +7,7 @@ import (
 const liveEventsPath = "/live_events"
 
 func Fetch(elementalServer *elemental.ElementalServer) ([]byte, error) {
-	req, err := elemental.GenerateRequest("GET", elementalServer, liveEventsPath, nil)
+	req, err := elementalServer.GenerateRequest("GET", liveEventsPath, nil)
 	if err != nil {
 		return nil, err
 	}

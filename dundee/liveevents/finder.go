@@ -9,7 +9,7 @@ import (
 func Find(stream *streams.Stream, liveEvents []Live_event) (*Live_event, error) {
 	for i, _ := range liveEvents {
 		liveEvent := &liveEvents[i]
-		if Match(stream, liveEvent) {
+		if liveEvent.Match(stream) {
 			return liveEvent, nil
 		}
 	}
