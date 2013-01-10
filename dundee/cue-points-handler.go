@@ -1,11 +1,11 @@
 package dundee
 
 import (
-	"dundee/cuepoints"
-	"dundee/liveevents"
-	"dundee/streams"
 	"errors"
 	"fmt"
+	"github.com/ign/ipl-dundee/dundee/cuepoints"
+	"github.com/ign/ipl-dundee/dundee/liveevents"
+	"github.com/ign/ipl-dundee/dundee/streams"
 	"log"
 	"net/http"
 )

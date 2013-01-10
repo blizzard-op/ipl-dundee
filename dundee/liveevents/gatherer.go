@@ -1,7 +1,7 @@
 package liveevents
 
 import (
-	"dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elemental"
 )
 
 func Gather(elementalServers []elemental.ElementalServer) []Live_event {

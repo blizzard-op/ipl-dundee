@@ -1,7 +1,7 @@
 package liveevents
 
 import (
-	"dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elemental"
 )
 
 const liveEventsPath = "/live_events"

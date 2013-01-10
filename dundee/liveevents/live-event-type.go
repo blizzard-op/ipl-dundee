@@ -1,8 +1,8 @@
 package liveevents
 
 import (
-	"dundee/elemental"
 	"encoding/xml"
+	"github.com/ign/ipl-dundee/dundee/elemental"
 )
 
 type Live_event_list struct {

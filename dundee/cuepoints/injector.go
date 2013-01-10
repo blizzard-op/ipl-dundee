@@ -1,9 +1,9 @@
 package cuepoints
 
 import (
-	"dundee/elemental"
-	"dundee/liveevents"
 	"encoding/xml"
+	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/liveevents"
 	"path"
 )
 

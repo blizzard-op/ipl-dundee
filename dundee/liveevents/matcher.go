@@ -1,7 +1,7 @@
 package liveevents
 
 import (
-	"dundee/streams"
+	"github.com/ign/ipl-dundee/dundee/streams"
 	"regexp"
 )
 

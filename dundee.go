@@ -1,9 +1,9 @@
 package main
 
 import (
-	"dundee"
 	"flag"
 	"fmt"
+	"github.com/ign/ipl-dundee/dundee"
 	"log"
 	"net/http"
 )

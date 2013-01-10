@@ -1,7 +1,7 @@
 package dundee
 
 import (
-	"dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elemental"
 )
 
 type Config struct {

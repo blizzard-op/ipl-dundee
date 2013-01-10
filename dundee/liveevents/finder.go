@@ -1,9 +1,9 @@
 package liveevents
 
 import (
-	"dundee/streams"
 	"errors"
 	"fmt"
+	"github.com/ign/ipl-dundee/dundee/streams"
 )
 
 func Find(stream *streams.Stream, liveEvents []Live_event) (*Live_event, error) {

@@ -1,8 +1,8 @@
 package liveevents
 
 import (
-	"dundee/elemental"
 	"encoding/xml"
+	"github.com/ign/ipl-dundee/dundee/elemental"
 )
 
 func Parse(data []byte, server *elemental.ElementalServer) ([]Live_event, error) {
