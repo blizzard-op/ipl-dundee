@@ -2,24 +2,26 @@ package cuepoints
 
 import (
 	"encoding/xml"
-	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elementals"
 	"github.com/ign/ipl-dundee/dundee/liveevents"
 	"path"
 )
 
-func Inject(liveEvent *liveevents.Live_event, cuePoint interface{}) error {
+func Inject(liveEvent *liveevents.LiveEvent, cuePoint interface{}) error {
 
-	body, err := xml.Marshal(cuePoint)
+	body, err := xml.MarshalIndent(cuePoint, "", "    ")
 	if err != nil {
 		return err
 	}
 
-	req, err := elemental.GenerateRequest("POST", liveEvent.Elemental, path.Join(liveEvent.Path, "stream_metadata"), body)
+	body = append([]byte(xml.Header), body...)
+
+	req, err := liveEvent.Elemental.GenerateRequest("POST", path.Join(liveEvent.Path, "stream_metadata"), body)
 	if err != nil {
 		return err
 	}
 
-	_, _, err = elemental.ExecuteRequest(req)
+	_, _, err = elementals.ExecuteRequest(req)
 	if err != nil {
 		return err
 	}

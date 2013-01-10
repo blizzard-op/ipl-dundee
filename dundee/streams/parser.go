@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 )
 
-func Parse(b []byte) ([]Stream, error) {
-	var streams []Stream
+func Parse(b []byte) (Streams, error) {
+	var streamList Streams
 
-	err := json.Unmarshal(b, &streams)
+	err := json.Unmarshal(b, &streamList)
 	if err != nil {
 		return nil, err
 	}
 
-	return streams, nil
+	return streamList, nil
 }

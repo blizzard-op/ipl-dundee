@@ -1,4 +1,4 @@
-package elemental
+package elementals
 
 type ElementalServer struct {
 	Name     string

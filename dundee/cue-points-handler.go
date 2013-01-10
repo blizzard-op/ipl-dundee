@@ -44,7 +44,7 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request, c *Config) {
 func injectCuePoint(stream *streams.Stream, cuePoint interface{}, c *Config) {
 	liveEvents := liveevents.Gather(c.Elementals)
 
-	liveEvent, err := liveevents.Find(stream, liveEvents)
+	liveEvent, err := liveEvents.Find(stream)
 	if err != nil {
 		log.Println(err)
 		return
@@ -72,7 +72,7 @@ func resolveStream(streamID string, w http.ResponseWriter, c *Config) (*streams.
 		return nil, err
 	}
 
-	stream, err := streams.Find(streamID, streamList)
+	stream, err := streamList.Find(streamID)
 	if err != nil {
 		w.WriteHeader(400)
 		return nil, err

@@ -1,10 +1,10 @@
 package dundee
 
 import (
-	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elementals"
 )
 
 type Config struct {
-	Elementals  []elemental.ElementalServer
+	Elementals  []elementals.ElementalServer
 	Streams_url *string `json:"-"`
 }

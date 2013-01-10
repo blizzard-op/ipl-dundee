@@ -1,12 +1,12 @@
 package liveevents
 
 import (
-	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elementals"
 )
 
-func Gather(elementalServers []elemental.ElementalServer) []Live_event {
-	var results = make([]Live_event, 0)
-	var pipe = make(chan []Live_event, len(elementalServers))
+func Gather(elementalServers []elementals.ElementalServer) LiveEvents {
+	var results = make(LiveEvents, 0)
+	var pipe = make(chan LiveEvents, len(elementalServers))
 
 	for i, _ := range elementalServers {
 		server := &elementalServers[i]
@@ -20,11 +20,11 @@ func Gather(elementalServers []elemental.ElementalServer) []Live_event {
 	return results
 }
 
-func gatherFromServer(pipe chan []Live_event, server *elemental.ElementalServer) {
-	var liveEvents []Live_event
+func gatherFromServer(pipe chan LiveEvents, server *elementals.ElementalServer) {
+	var eventList LiveEvents
 
 	defer func() {
-		pipe <- liveEvents
+		pipe <- eventList
 	}()
 
 	data, err := Fetch(server)
@@ -32,7 +32,7 @@ func gatherFromServer(pipe chan []Live_event, server *elemental.ElementalServer)
 		return
 	}
 
-	liveEvents, err = Parse(data, server)
+	eventList, err = Parse(data, server)
 	if err != nil {
 		return
 	}
