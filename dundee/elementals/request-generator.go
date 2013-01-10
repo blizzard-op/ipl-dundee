@@ -5,16 +5,31 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"io"
+	"log"
 	"net/http"
 	"path"
+	"regexp"
 	"strconv"
 	"time"
 )
 
-const protocol = "http://"
+var pattern_protocol *regexp.Regexp
+var pattern_leadingSlash *regexp.Regexp
+
+func init() {
+	var err error
+	pattern_protocol, err = regexp.Compile(`^(?:http(?P<secure>s)?:/+)?(?P<hostname>[^/]*)/*$`)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	pattern_leadingSlash, err = regexp.Compile(`^/*(?P<path>.*)$`)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
 
 func (this *ElementalServer) GenerateRequest(method, elementalPath string, body []byte) (*http.Request, error) {
-	url := protocol + path.Join(this.Hostname, elementalPath)
+	url := this.parseURL(this.Hostname, elementalPath)
 
 	req, err := http.NewRequest(method, url, bytes.NewReader(body))
 	if err != nil {
@@ -30,6 +45,13 @@ func (this *ElementalServer) GenerateRequest(method, elementalPath string, body 
 	req.Header.Add("Content-type", "application/xml")
 
 	return req, nil
+}
+
+func (this *ElementalServer) parseURL(host, p string) string {
+	newHost := pattern_protocol.ReplaceAllString(host, `http$secure://$hostname`)
+	newPath := pattern_leadingSlash.ReplaceAllString(path.Clean(p), `/$path`)
+
+	return newHost + newPath
 }
 
 func (this *ElementalServer) generateAuthKey(elementalPath string) (string, string) {
