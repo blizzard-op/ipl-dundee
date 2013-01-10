@@ -5,19 +5,19 @@ import (
 	"net/http"
 )
 
-var cuePointTypes = make(map[string]func(r *http.Request) (interface{}, error), 5)
+var cpTypeMap = make(map[string]func(r *http.Request) (interface{}, error), 2)
 
-func RegisterCuePointType(name string, cp func(r *http.Request) (interface{}, error)) error {
-	if cuePointTypes[name] != nil {
-		return errors.New("A cue point is already registered under the name: " + name)
+func RegisterCuePointType(cpType string, cpCreator func(r *http.Request) (interface{}, error)) error {
+	if cpTypeMap[cpType] != nil {
+		return errors.New("A cue point is already registered under the name: " + cpType)
 	}
-	cuePointTypes[name] = cp
+	cpTypeMap[cpType] = cpCreator
 	return nil
 }
 
 func New(cpType string, r *http.Request) (interface{}, error) {
-	if cuePointTypes[cpType] == nil {
+	if cpTypeMap[cpType] == nil {
 		return nil, errors.New("Invalid Cue Point type.")
 	}
-	return cuePointTypes[cpType](r)
+	return cpTypeMap[cpType](r)
 }

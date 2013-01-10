@@ -2,11 +2,11 @@ package cuepoints
 
 import (
 	"encoding/xml"
-	"fmt"
+	"log"
 	"net/http"
 )
 
-type cuePoint struct {
+type advertisement_cuepoint struct {
 	XMLName  xml.Name `xml:"data"`
 	Category string   `xml:"category"`
 	Action   string   `xml:"action"`
@@ -15,12 +15,10 @@ type cuePoint struct {
 }
 
 func init() {
-	err := RegisterCuePointType("advertisement", new)
+	err := RegisterCuePointType("advertisement", func(r *http.Request) (interface{}, error) {
+		return &advertisement_cuepoint{Category: "Video Cue Point", Action: "13", Label: "Ad Name", Value: "30"}, nil
+	})
 	if err != nil {
-		fmt.Println("Failed to register cuepoint type.\n" + err.Error())
+		log.Println("Failed to register cuepoint type.\n", err)
 	}
-}
-
-func new(r *http.Request) (interface{}, error) {
-	return &cuePoint{Category: "Video Cue Point", Action: "13", Label: "Ad Name", Value: "30"}, nil
 }
