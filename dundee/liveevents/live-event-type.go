@@ -2,7 +2,7 @@ package liveevents
 
 import (
 	"encoding/xml"
-	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elementals"
 )
 
 type Live_event_list struct {
@@ -11,8 +11,8 @@ type Live_event_list struct {
 }
 
 type Live_event struct {
-	Path      string                     `xml:"href,attr"`
-	Name      string                     `xml:"name"`
-	Status    string                     `xml:"status"`
-	Elemental *elemental.ElementalServer `-`
+	Path      string                      `xml:"href,attr"`
+	Name      string                      `xml:"name"`
+	Status    string                      `xml:"status"`
+	Elemental *elementals.ElementalServer `-`
 }

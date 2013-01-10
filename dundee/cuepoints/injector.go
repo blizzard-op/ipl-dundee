@@ -2,7 +2,7 @@ package cuepoints
 
 import (
 	"encoding/xml"
-	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elementals"
 	"github.com/ign/ipl-dundee/dundee/liveevents"
 	"path"
 )
@@ -19,7 +19,7 @@ func Inject(liveEvent *liveevents.Live_event, cuePoint interface{}) error {
 		return err
 	}
 
-	_, _, err = elemental.ExecuteRequest(req)
+	_, _, err = elementals.ExecuteRequest(req)
 	if err != nil {
 		return err
 	}

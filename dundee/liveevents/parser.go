@@ -2,10 +2,10 @@ package liveevents
 
 import (
 	"encoding/xml"
-	"github.com/ign/ipl-dundee/dundee/elemental"
+	"github.com/ign/ipl-dundee/dundee/elementals"
 )
 
-func Parse(data []byte, server *elemental.ElementalServer) ([]Live_event, error) {
+func Parse(data []byte, server *elementals.ElementalServer) ([]Live_event, error) {
 	var liveEventList Live_event_list
 
 	err := xml.Unmarshal(data, &liveEventList)
