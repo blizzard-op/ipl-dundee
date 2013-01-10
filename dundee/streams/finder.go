@@ -4,9 +4,9 @@ import (
 	"errors"
 )
 
-func Find(streamID string, streamList []Stream) (*Stream, error) {
-	for i, _ := range streamList {
-		stream := streamList[i]
+func (this Streams) Find(streamID string) (*Stream, error) {
+	for i, _ := range this {
+		stream := this[i]
 		if stream.Id == streamID {
 			return &stream, nil
 		}

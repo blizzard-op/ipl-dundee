@@ -7,7 +7,7 @@ import (
 	"path"
 )
 
-func Inject(liveEvent *liveevents.Live_event, cuePoint interface{}) error {
+func Inject(liveEvent *liveevents.LiveEvent, cuePoint interface{}) error {
 
 	body, err := xml.Marshal(cuePoint)
 	if err != nil {

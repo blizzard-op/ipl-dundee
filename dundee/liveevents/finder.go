@@ -6,9 +6,9 @@ import (
 	"github.com/ign/ipl-dundee/dundee/streams"
 )
 
-func Find(stream *streams.Stream, liveEvents []Live_event) (*Live_event, error) {
-	for i, _ := range liveEvents {
-		liveEvent := &liveEvents[i]
+func (this LiveEvents) Find(stream *streams.Stream) (*LiveEvent, error) {
+	for i, _ := range this {
+		liveEvent := &this[i]
 		if liveEvent.Match(stream) {
 			return liveEvent, nil
 		}
