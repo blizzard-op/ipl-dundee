@@ -8,7 +8,7 @@ import (
 
 const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 <live_event_list>
-<live_event href="/api/live_events/74" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/74" version="1.5.4.1235" product="Elemental Live">
   <name>01-08-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -65,7 +65,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
   <start_time></start_time>
   <elapsed></elapsed>
 </live_event>
-<live_event href="/api/live_events/73" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/73" version="1.5.4.1235" product="Elemental Live">
   <name>01-08-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -122,7 +122,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
   <start_time></start_time>
   <elapsed></elapsed>
 </live_event>
-<live_event href="/api/live_events/72" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/72" version="1.5.4.1235" product="Elemental Live">
   <name>01-08-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -179,7 +179,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
   <start_time></start_time>
   <elapsed></elapsed>
 </live_event>
-<live_event href="/api/live_events/71" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/71" version="1.5.4.1235" product="Elemental Live">
   <name>01-08-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -243,7 +243,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/70" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/70" version="1.5.4.1235" product="Elemental Live">
   <name>01-07-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -307,7 +307,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/69" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/69" version="1.5.4.1235" product="Elemental Live">
   <name>01-07-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -371,7 +371,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/68" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/68" version="1.5.4.1235" product="Elemental Live">
   <name>01-06-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -441,7 +441,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/67" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/67" version="1.5.4.1235" product="Elemental Live">
   <name>01-06-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -511,7 +511,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/66" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/66" version="1.5.4.1235" product="Elemental Live">
   <name>01-06-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -581,7 +581,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/65" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/65" version="1.5.4.1235" product="Elemental Live">
   <name>01-05-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -651,7 +651,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/64" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/64" version="1.5.4.1235" product="Elemental Live">
   <name>01-05-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -721,7 +721,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/63" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/63" version="1.5.4.1235" product="Elemental Live">
   <name>01-05-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -791,7 +791,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/62" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/62" version="1.5.4.1235" product="Elemental Live">
   <name>01-04-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -861,7 +861,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/61" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/61" version="1.5.4.1235" product="Elemental Live">
   <name>01-04-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -931,7 +931,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/60" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/60" version="1.5.4.1235" product="Elemental Live">
   <name>01-04-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -1001,7 +1001,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/59" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/59" version="1.5.4.1235" product="Elemental Live">
   <name>01-03-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -1071,7 +1071,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/58" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/58" version="1.5.4.1235" product="Elemental Live">
   <name>01-03-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -1141,7 +1141,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/57" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/57" version="1.5.4.1235" product="Elemental Live">
   <name>01-03-13 SM 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -1211,7 +1211,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/56" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/56" version="1.5.4.1235" product="Elemental Live">
   <name>01-02-13 LoL 1</name>
   <input>
     <failover_time>5</failover_time>
@@ -1281,7 +1281,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
     </audit>
   </audit_messages>
 </live_event>
-<live_event href="/api/live_events/55" version="1.5.4.1235" product="Elemental Live">
+<live_event href="/live_events/55" version="1.5.4.1235" product="Elemental Live">
   <name>01-02-13 SC2 1</name>
   <input>
     <failover_time>5</failover_time>
