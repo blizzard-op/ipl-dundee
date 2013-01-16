@@ -18,9 +18,7 @@ func Gather(elementalServers []elementals.ElementalServer) LiveEvents {
 		results = append(results, <-pipe...)
 	}
 
-	if len(results) == 0 {
-		log.Println("Did not find any live events.")
-	}
+	log.Printf("Found %d live events.\n", len(results))
 
 	return results
 }
