@@ -3,8 +3,7 @@ package elementals
 import (
 	"bytes"
 	"crypto/md5"
-	"encoding/hex"
-	//"fmt"
+	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -42,12 +41,12 @@ func (this *ElementalServer) generateAuthKey(path string) (string, string) {
 	io.WriteString(h1, this.Login)
 	io.WriteString(h1, this.ApiKey)
 	io.WriteString(h1, expires)
-	h1String := hex.EncodeToString(h1.Sum(nil))
+	h1String := fmt.Sprintf("%x", h1.Sum(nil))
 
 	h2 := md5.New()
 	io.WriteString(h2, this.ApiKey)
 	io.WriteString(h2, h1String)
-	h2String := hex.EncodeToString(h2.Sum(nil))
+	h2String := fmt.Sprintf("%x", h2.Sum(nil))
 
 	return expires, h2String
 }
