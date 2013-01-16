@@ -2,6 +2,7 @@ package liveevents
 
 import (
 	"github.com/ign/ipl-dundee/dundee/elementals"
+	"log"
 )
 
 func Gather(elementalServers []elementals.ElementalServer) LiveEvents {
@@ -16,6 +17,8 @@ func Gather(elementalServers []elementals.ElementalServer) LiveEvents {
 	for _, _ = range elementalServers {
 		results = append(results, <-pipe...)
 	}
+
+	log.Printf("Found %d live events.\n", len(results))
 
 	return results
 }

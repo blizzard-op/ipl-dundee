@@ -9,12 +9,12 @@ import (
 
 func Inject(liveEvent *liveevents.LiveEvent, cuePoint interface{}) error {
 
-	body, err := xml.MarshalIndent(cuePoint, "", "    ")
+	body, err := xml.Marshal(cuePoint)
 	if err != nil {
 		return err
 	}
 
-	body = append([]byte(xml.Header), body...)
+	body = append([]byte("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"), body...)
 
 	req, err := liveEvent.Elemental.GenerateRequest("POST", path.Join(liveEvent.Path, "stream_metadata"), body)
 	if err != nil {

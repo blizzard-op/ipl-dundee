@@ -4,39 +4,22 @@ import (
 	"bytes"
 	"crypto/md5"
 	"encoding/hex"
+	//"fmt"
 	"io"
-	"log"
 	"net/http"
-	"path"
-	"regexp"
 	"strconv"
 	"time"
 )
 
-var pattern_protocol *regexp.Regexp
-var pattern_leadingSlash *regexp.Regexp
-
-func init() {
-	var err error
-	pattern_protocol, err = regexp.Compile(`^(?:http(?P<secure>s)?:/+)?(?P<hostname>[^/]*)/*$`)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	pattern_leadingSlash, err = regexp.Compile(`^/*(?P<path>.*)$`)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func (this *ElementalServer) GenerateRequest(method, elementalPath string, body []byte) (*http.Request, error) {
-	url := this.parseURL(this.Hostname, elementalPath)
+func (this *ElementalServer) GenerateRequest(method, path string, body []byte) (*http.Request, error) {
+	url := this.parseURL(path)
 
 	req, err := http.NewRequest(method, url, bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
 
-	expires, authKey := this.generateAuthKey(elementalPath)
+	expires, authKey := this.generateAuthKey(path)
 
 	req.Header.Add("X-Auth-User", this.Login)
 	req.Header.Add("X-Auth-Expires", expires)
@@ -44,23 +27,18 @@ func (this *ElementalServer) GenerateRequest(method, elementalPath string, body 
 	req.Header.Add("Accept", "application/xml")
 	req.Header.Add("Content-type", "application/xml")
 
+	//fmt.Println(req)
+
 	return req, nil
 }
 
-func (this *ElementalServer) parseURL(host, p string) string {
-	newHost := pattern_protocol.ReplaceAllString(host, `http$secure://$hostname`)
-	newPath := pattern_leadingSlash.ReplaceAllString(path.Clean(p), `/$path`)
-
-	return newHost + newPath
-}
-
-func (this *ElementalServer) generateAuthKey(elementalPath string) (string, string) {
+func (this *ElementalServer) generateAuthKey(path string) (string, string) {
 	currTime := time.Now()
-	expireTime := currTime.Add(time.Duration(10) * time.Second)
+	expireTime := currTime.Add(time.Duration(10) * time.Minute)
 	expires := strconv.FormatInt(expireTime.Unix(), 10)
 
 	h1 := md5.New()
-	io.WriteString(h1, elementalPath)
+	io.WriteString(h1, path)
 	io.WriteString(h1, this.Login)
 	io.WriteString(h1, this.ApiKey)
 	io.WriteString(h1, expires)
