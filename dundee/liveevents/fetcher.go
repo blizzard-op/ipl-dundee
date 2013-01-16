@@ -4,7 +4,7 @@ import (
 	"github.com/ign/ipl-dundee/dundee/elementals"
 )
 
-const liveEventsPath = "/live_events"
+const liveEventsPath = "/live_events/"
 
 func Fetch(elementalServer *elementals.ElementalServer) ([]byte, error) {
 	req, err := elementalServer.GenerateRequest("GET", liveEventsPath, nil)
