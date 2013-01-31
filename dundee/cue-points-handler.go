@@ -20,7 +20,7 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request, c *Config) {
 		return
 	}
 
-	cuePoint, err := cuepoints.New(cuePointType, r)
+	cuePoint, timedMetadata, err := cuepoints.New(cuePointType, r)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprint(w, err)
@@ -35,13 +35,13 @@ func CuePointsHandler(w http.ResponseWriter, r *http.Request, c *Config) {
 		return
 	}
 
-	go injectCuePoint(stream, cuePoint, c)
+	go injectCuePoint(stream, cuePoint, timedMetadata, c)
 
 	w.WriteHeader(201)
 	fmt.Fprint(w, stream.Name)
 }
 
-func injectCuePoint(stream *streams.Stream, cuePoint interface{}, c *Config) {
+func injectCuePoint(stream *streams.Stream, cuePoint interface{}, timedMetadata *cuepoints.TimedMetadata, c *Config) {
 	liveEvents := liveevents.Gather(c.Elementals)
 
 	liveEvent, err := liveEvents.Find(stream)
@@ -50,13 +50,14 @@ func injectCuePoint(stream *streams.Stream, cuePoint interface{}, c *Config) {
 		return
 	}
 
-	err = cuepoints.Inject(liveEvent, cuePoint)
-	if err != nil {
-		log.Println(err)
+	errs := cuepoints.Inject(liveEvent, cuePoint, timedMetadata)
+	if len(errs) > 0 {
+		for _, err = range errs {
+			log.Println(err)
+		}
 		return
 	}
 
-	log.Println("Successfully injected cuepoint into event:", liveEvent.Name)
 }
 
 func resolveStream(streamID string, w http.ResponseWriter, c *Config) (*streams.Stream, error) {
