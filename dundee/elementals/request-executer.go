@@ -2,7 +2,6 @@ package elementals
 
 import (
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -17,8 +16,6 @@ func ExecuteRequest(r *http.Request) (*http.Response, []byte, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		b, _ := ioutil.ReadAll(resp.Body)
-		fmt.Println(string(b))
 		return nil, nil, errors.New("Request to elemental did not return 200 (ok).")
 	}
 
